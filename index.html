@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MSPDash — ConnectWise reporting that doesn't require a data team</title>
+  <meta name="description" content="Weekly ConnectWise PSA reports for owner-operators of 1-10 tech MSPs. Utilization, SLA compliance, agreement profitability — delivered every Monday morning." />
+
+  <!-- Vercel Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <!-- Google Ads gtag — Consent Mode v2 (GDPR-safe) -->
+  <script>
+    var gtagLoaded = false;
+    function loadGtag() {
+      if (gtagLoaded) return;
+      gtagLoaded = true;
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function(){dataLayer.push(arguments);};
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        wait_for_update: 500
+      });
+      if (localStorage.getItem('cookie_consent') === 'accepted') {
+        gtag('consent', 'update', {
+          ad_storage: 'granted',
+          analytics_storage: 'granted',
+          ad_user_data: 'granted',
+          ad_personalization: 'granted'
+        });
+      }
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18071371531';
+      s.async = true;
+      document.head.appendChild(s);
+      gtag('js', new Date());
+      gtag('config', 'AW-18071371531');
+    }
+    function grantConsent() {
+      localStorage.setItem('cookie_consent', 'accepted');
+      loadGtag();
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', {
+          ad_storage: 'granted',
+          analytics_storage: 'granted',
+          ad_user_data: 'granted',
+          ad_personalization: 'granted'
+        });
+      }
+      var cb = document.getElementById('consent-checkbox');
+      var btn = document.getElementById('submit-btn');
+      var inlineBook = document.getElementById('inline-booking');
+      var floatingBook = document.getElementById('floating-booking');
+      if (cb) cb.checked = true;
+      if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+      if (inlineBook) inlineBook.style.opacity = '1';
+      if (floatingBook) floatingBook.style.opacity = '1';
+      var bar = document.getElementById('consent-bar');
+      if (bar) bar.style.display = 'none';
+    }
+    function handleConsentCheckbox(cb) {
+      if (cb.checked) {
+        grantConsent();
+      } else {
+        var btn = document.getElementById('submit-btn');
+        var inlineBook = document.getElementById('inline-booking');
+        var floatingBook = document.getElementById('floating-booking');
+        if (btn) { btn.disabled = true; btn.style.opacity = '0.5'; }
+        if (inlineBook) inlineBook.style.opacity = '0.4';
+        if (floatingBook) floatingBook.style.opacity = '0.4';
+      }
+    }
+    loadGtag();
+    document.addEventListener('DOMContentLoaded', function() {
+      var consent = localStorage.getItem('cookie_consent');
+      if (consent === 'accepted') {
+        grantConsent();
+      } else {
+        var bar = document.getElementById('consent-bar');
+        if (bar) bar.style.display = 'flex';
+      }
+    });
+  </script>
+
+  <!-- Calendly popup widget -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+  <!-- Fonts — Space Grotesk (headlines) + DM Sans (body) + JetBrains Mono (accents) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body { font-family: 'DM Sans', system-ui, sans-serif; background: #070d14; color: #e8f0f8; margin: 0; }
+    h1,h2,h3,h4,h5,h6 { font-family: 'Space Grotesk', system-ui, sans-serif; }
+    html { scroll-behavior: smooth; }
+
+    .accent { color: #22d3ee; }
+    .border-line { border-top: 1px solid #0f1f2e; }
+
+    input, select, textarea { background: #0d1a26; border: 1px solid #0f1f2e; color: #e8f0f8; outline: none; border-radius: 0.375rem; }
+    input:focus, select:focus, textarea:focus { border-color: rgba(34,211,238,0.5); box-shadow: 0 0 0 1px rgba(34,211,238,0.25); }
+    ::placeholder { color: #94a8b8; }
+
+    .card { background: #0b1723; border: 1px solid #0f1f2e; border-radius: 0.5rem; }
+    .tag { background: transparent; border: 1px solid #0f1f2e; color: #94a8b8; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.05em; padding: 0.3rem 0.65rem; border-radius: 0.25rem; }
+
+    .btn-primary { background: #22d3ee; color: #070d14; font-weight: 700; border-radius: 0.375rem; padding: 0 2rem; height: 3rem; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; text-decoration: none; transition: background 0.15s; font-family: 'Space Grotesk', sans-serif; cursor: pointer; border: none; }
+    .btn-primary:hover { background: #06b6d4; }
+    .btn-ghost { color: #94a8b8; padding: 0 1rem; height: 3rem; display: inline-flex; align-items: center; font-size: 1rem; text-decoration: none; transition: color 0.15s; }
+    .btn-ghost:hover { color: #e8f0f8; }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .grid-2col { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .step-icon { width: 2.25rem; height: 2.25rem; background: rgba(34,211,238,0.1); border-radius: 0.375rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    @media (max-width: 768px) { .hide-mobile { display: none !important; } }
+  </style>
+</head>
+<body>
+
+  <!-- NAV / LOGO -->
+  <div style="max-width:1120px;margin:0 auto;padding:1.5rem 2rem 0;">
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+      <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;color:#e8f0f8;letter-spacing:-0.01em;">MSPDash</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section style="max-width:1120px;margin:0 auto;padding:4rem 2rem 4rem;position:relative;">
+    <div style="display:inline-flex;align-items:center;gap:0.5rem;border:1px solid #0f1f2e;border-radius:0.25rem;padding:0.3rem 0.75rem;color:#94a8b8;font-size:0.8rem;margin-bottom:2rem;font-family:'JetBrains Mono',monospace;">
+      <span style="color:#22d3ee;">→</span> Early Access Open · Free to join
+    </div>
+
+    <div style="max-width:780px;">
+      <h1 style="font-size:clamp(2.25rem,5vw,3.75rem);line-height:1.08;font-weight:700;letter-spacing:-0.025em;margin-bottom:1.5rem;color:#e8f0f8;">
+        Your ConnectWise data, <span style="color:#22d3ee;">one Monday morning report.</span>
+      </h1>
+      <p style="font-size:clamp(1.05rem,2vw,1.2rem);color:#94a8b8;line-height:1.7;max-width:600px;margin-bottom:2.5rem;">
+        Built for owner-operators of 1-10 tech MSPs who are tired of exporting CSVs to Excel just to see how the business is doing. Utilization, SLAs, agreement profitability, delivered to your inbox.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;">
+        <a href="#waitlist" class="btn-primary">Get Early Access</a>
+        <a href="#how-it-works" class="btn-ghost">See how it works ↓</a>
+      </div>
+    </div>
+
+    <!-- Desktop accent — weekly report preview -->
+    <div class="hide-mobile card" style="position:absolute;right:2rem;top:50%;transform:translateY(-50%);width:280px;padding:1.25rem;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#94a8b8;">
+      <div style="color:#22d3ee;margin-bottom:0.75rem;">// weekly_report.json</div>
+      <div><span style="color:#06b6d4;">week:</span> <span style="color:#e8f0f8;">"Apr 14-18"</span></div>
+      <div><span style="color:#06b6d4;">utilization:</span> <span style="color:#e8f0f8;">78.4%</span></div>
+      <div><span style="color:#06b6d4;">sla_compliance:</span> <span style="color:#e8f0f8;">94.2%</span></div>
+      <div><span style="color:#06b6d4;">tickets_closed:</span> <span style="color:#e8f0f8;">142</span></div>
+      <div><span style="color:#06b6d4;">top_client:</span> <span style="color:#e8f0f8;">"Acme Corp"</span></div>
+      <div style="margin-top:0.75rem;color:#22d3ee;">→ report emailed to owner</div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD MOCKUP -->
+  <section class="border-line" style="padding:3rem 2rem 5rem;">
+    <div style="max-width:1120px;margin:0 auto;">
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#22d3ee;font-family:'JetBrains Mono',monospace;margin-bottom:1.5rem;text-align:center;">Early preview</p>
+
+      <!-- Browser chrome frame -->
+      <div style="max-width:900px;margin:0 auto;border:1px solid #0f1f2e;border-radius:0.75rem;overflow:hidden;background:#0b1723;">
+        <!-- Title bar -->
+        <div style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1rem;background:#0a1420;border-bottom:1px solid #0f1f2e;">
+          <div style="display:flex;gap:0.375rem;">
+            <span style="width:10px;height:10px;border-radius:50%;background:#374151;"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#374151;"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#374151;"></span>
+          </div>
+          <div style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#64748b;">mspdash.leanaistudio.com/dashboard</div>
+        </div>
+        <!-- Dashboard content -->
+        <div style="padding:1.5rem;display:grid;grid-template-columns:180px 1fr;gap:1.5rem;">
+          <!-- Sidebar -->
+          <div style="display:flex;flex-direction:column;gap:0.25rem;font-family:'DM Sans',sans-serif;font-size:0.8rem;">
+            <div style="padding:0.5rem 0.75rem;border-radius:0.25rem;background:rgba(34,211,238,0.08);color:#22d3ee;font-weight:500;">Weekly Report</div>
+            <div style="padding:0.5rem 0.75rem;color:#64748b;">Utilization</div>
+            <div style="padding:0.5rem 0.75rem;color:#64748b;">SLA Tracker</div>
+            <div style="padding:0.5rem 0.75rem;color:#64748b;">Agreements</div>
+            <div style="padding:0.5rem 0.75rem;color:#64748b;">By Client</div>
+            <div style="padding:0.5rem 0.75rem;color:#64748b;">By Tech</div>
+          </div>
+          <!-- Main area -->
+          <div>
+            <!-- KPI row -->
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;margin-bottom:1.5rem;">
+              <div style="background:#0d1a26;border:1px solid #0f1f2e;border-radius:0.375rem;padding:1rem;">
+                <div style="font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;font-family:'JetBrains Mono',monospace;margin-bottom:0.25rem;">Utilization</div>
+                <div style="font-size:1.5rem;font-weight:700;color:#e8f0f8;font-family:'Space Grotesk',sans-serif;">78.4%</div>
+                <div style="font-size:0.65rem;color:#22c55e;">↑ 3.2% vs last week</div>
+              </div>
+              <div style="background:#0d1a26;border:1px solid #0f1f2e;border-radius:0.375rem;padding:1rem;">
+                <div style="font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;font-family:'JetBrains Mono',monospace;margin-bottom:0.25rem;">SLA Compliance</div>
+                <div style="font-size:1.5rem;font-weight:700;color:#e8f0f8;font-family:'Space Grotesk',sans-serif;">94.2%</div>
+                <div style="font-size:0.65rem;color:#22c55e;">↑ 1.1%</div>
+              </div>
+              <div style="background:#0d1a26;border:1px solid #0f1f2e;border-radius:0.375rem;padding:1rem;">
+                <div style="font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;font-family:'JetBrains Mono',monospace;margin-bottom:0.25rem;">Tickets Closed</div>
+                <div style="font-size:1.5rem;font-weight:700;color:#e8f0f8;font-family:'Space Grotesk',sans-serif;">142</div>
+                <div style="font-size:0.65rem;color:#f97316;">↓ 8 vs last week</div>
+              </div>
+              <div style="background:#0d1a26;border:1px solid #0f1f2e;border-radius:0.375rem;padding:1rem;">
+                <div style="font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;font-family:'JetBrains Mono',monospace;margin-bottom:0.25rem;">Avg Resolution</div>
+                <div style="font-size:1.5rem;font-weight:700;color:#e8f0f8;font-family:'Space Grotesk',sans-serif;">4.2h</div>
+                <div style="font-size:0.65rem;color:#22c55e;">↑ 0.8h faster</div>
+              </div>
+            </div>
+            <!-- Mini table -->
+            <div style="background:#0d1a26;border:1px solid #0f1f2e;border-radius:0.375rem;overflow:hidden;">
+              <div style="padding:0.75rem 1rem;border-bottom:1px solid #0f1f2e;font-family:'Space Grotesk',sans-serif;font-size:0.8rem;font-weight:600;color:#e8f0f8;">Top Clients by Revenue This Week</div>
+              <table style="width:100%;border-collapse:collapse;font-size:0.75rem;">
+                <thead>
+                  <tr style="border-bottom:1px solid #0f1f2e;">
+                    <th style="text-align:left;padding:0.5rem 1rem;color:#64748b;font-weight:500;font-family:'JetBrains Mono',monospace;font-size:0.65rem;">Client</th>
+                    <th style="text-align:right;padding:0.5rem 1rem;color:#64748b;font-weight:500;font-family:'JetBrains Mono',monospace;font-size:0.65rem;">Hours</th>
+                    <th style="text-align:right;padding:0.5rem 1rem;color:#64748b;font-weight:500;font-family:'JetBrains Mono',monospace;font-size:0.65rem;">Revenue</th>
+                    <th style="text-align:right;padding:0.5rem 1rem;color:#64748b;font-weight:500;font-family:'JetBrains Mono',monospace;font-size:0.65rem;">Margin</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid #0f1f2e;">
+                    <td style="padding:0.5rem 1rem;color:#e8f0f8;">Acme Corp</td>
+                    <td style="text-align:right;padding:0.5rem 1rem;color:#94a8b8;">38.5</td>
+                    <td style="text-align:right;padding:0.5rem 1rem;color:#e8f0f8;">$5,775</td>
+                    <td style="text-align:right;padding:0.5rem 1rem;color:#22c55e;">62%</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid #0f1f2e;">
+                    <td style="padding:0.5rem 1rem;color:#e8f0f8;">Meridian Health</td>
+                    <td style="text-align:right;padding:0.5rem 1rem;color:#94a8b8;">24.0</td>
+                    <td style="text-align:right;padding:0.5rem 1rem;color:#e8f0f8;">$3,600</td>
+                    <td style="text-align:right;padding:0.5rem 1rem;color:#22c55e;">58%</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:0.5rem 1rem;color:#e8f0f8;">Baker & Lewis LLP</td>
+                    <td style="text-align:right;padding:0.5rem 1rem;color:#94a8b8;">19.0</td>
+                    <td style="text-align:right;padding:0.5rem 1rem;color:#e8f0f8;">$2,850</td>
+                    <td style="text-align:right;padding:0.5rem 1rem;color:#f97316;">41%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:0.8rem;color:#64748b;margin-top:1rem;font-style:italic;">Early preview of the MSPDash dashboard</p>
+    </div>
+  </section>
+
+  <!-- PAIN SECTION -->
+  <section class="border-line" style="padding:5rem 2rem;">
+    <div style="max-width:1120px;margin:0 auto;">
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#22d3ee;font-family:'JetBrains Mono',monospace;margin-bottom:1rem;">The problem</p>
+      <h2 style="font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;letter-spacing:-0.015em;max-width:660px;margin-bottom:4rem;color:#e8f0f8;">
+        ConnectWise has 400+ report templates. None of them answer "how did we do this week?"
+      </h2>
+
+      <div class="grid-auto" style="gap:3rem;">
+        <div>
+          <span style="display:block;font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:rgba(34,211,238,0.45);margin-bottom:0.75rem;">01</span>
+          <p style="font-size:1rem;color:#94a8b8;line-height:1.7;">
+            Every Monday you export CSVs from ConnectWise, paste them into the same Excel spreadsheet, and rebuild the same charts. Utilization by tech, tickets by client, SLA breaches. It takes 30-45 minutes and you've been doing it for years.
+          </p>
+        </div>
+        <div>
+          <span style="display:block;font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:rgba(34,211,238,0.45);margin-bottom:0.75rem;">02</span>
+          <p style="font-size:1rem;color:#94a8b8;line-height:1.7;">
+            BrightGauge costs $179/month and was built for 50+ tech MSPs with a dedicated ops person to configure dashboards. For a 5-person shop, that's a bigger line item than some of your monitoring tools, and you still have to set it up yourself.
+          </p>
+        </div>
+        <div>
+          <span style="display:block;font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:rgba(34,211,238,0.45);margin-bottom:0.75rem;">03</span>
+          <p style="font-size:1rem;color:#94a8b8;line-height:1.7;">
+            Your techs close tickets but you have no idea if SLAs are slipping, which clients are eating margin, or whether utilization hit target this week. You find out at month-end when the invoice reconciliation reveals the damage.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" class="border-line" style="padding:5rem 2rem;">
+    <div style="max-width:1120px;margin:0 auto;">
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#22d3ee;font-family:'JetBrains Mono',monospace;margin-bottom:1rem;">How it works</p>
+      <h2 style="font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;letter-spacing:-0.015em;max-width:600px;margin-bottom:4rem;color:#e8f0f8;">
+        Connect once. Get your Monday report. Drill into what matters.
+      </h2>
+
+      <div class="grid-auto" style="gap:1.5rem;">
+        <div class="card" style="padding:2rem;">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;">
+            <div class="step-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+            </div>
+            <span class="mono" style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a8b8;">Step 1</span>
+          </div>
+          <h3 style="font-size:1.05rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">Connect your ConnectWise instance</h3>
+          <p style="font-size:0.95rem;color:#94a8b8;line-height:1.65;">Link your ConnectWise PSA with read-only API keys. MSPDash pulls tickets, time entries, agreements, and SLA data. Setup takes under 5 minutes.</p>
+        </div>
+        <div class="card" style="padding:2rem;">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;">
+            <div class="step-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <span class="mono" style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a8b8;">Step 2</span>
+          </div>
+          <h3 style="font-size:1.05rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">Get your Monday morning report</h3>
+          <p style="font-size:0.95rem;color:#94a8b8;line-height:1.65;">Every Monday at 7am, MSPDash emails you a clean summary: utilization by tech, SLA compliance, top revenue clients, agreement profitability, and tickets closed. No login needed.</p>
+        </div>
+        <div class="card" style="padding:2rem;">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;">
+            <div class="step-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+            </div>
+            <span class="mono" style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a8b8;">Step 3</span>
+          </div>
+          <h3 style="font-size:1.05rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">Drill into what matters</h3>
+          <p style="font-size:0.95rem;color:#94a8b8;line-height:1.65;">Open the dashboard to slice by technician, client, or date range. The views that matter to a small MSP are built in. No configuration required, no BI experience needed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IS THIS FOR -->
+  <section class="border-line" style="padding:5rem 2rem;">
+    <div style="max-width:1120px;margin:0 auto;">
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#22d3ee;font-family:'JetBrains Mono',monospace;margin-bottom:1rem;">Built for</p>
+      <h2 style="font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;letter-spacing:-0.015em;max-width:600px;margin-bottom:4rem;color:#e8f0f8;">
+        Owner-operators running 1-10 tech MSPs on ConnectWise PSA
+      </h2>
+
+      <div class="grid-2col" style="gap:1.5rem;margin-bottom:2rem;">
+        <div class="card" style="padding:2rem;">
+          <span class="mono" style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a8b8;display:block;margin-bottom:1rem;">The reporting gap</span>
+          <h3 style="font-size:1.15rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">See your MSP's health without leaving your inbox</h3>
+          <p style="font-size:0.95rem;color:#94a8b8;line-height:1.65;">ConnectWise reports were built for enterprises with reporting teams. MSPDash distills the metrics that matter: utilization, SLA, agreement profitability. Delivered as a weekly email built for shop owners.</p>
+        </div>
+        <div class="card" style="padding:2rem;">
+          <span class="mono" style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a8b8;display:block;margin-bottom:1rem;">The price gap</span>
+          <h3 style="font-size:1.15rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">Reporting that doesn't cost more than your RMM</h3>
+          <p style="font-size:0.95rem;color:#94a8b8;line-height:1.65;">BrightGauge and MSPbots start at $179/month and require configuration time you don't have. MSPDash is built to work out of the box at a fraction of the cost.</p>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:0.65rem;">
+        <span class="tag">ConnectWise PSA</span>
+        <span class="tag">1-10 technicians</span>
+        <span class="tag">Managed services</span>
+        <span class="tag">Break-fix + agreements</span>
+        <span class="tag">Owner-operator</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAITLIST / CTA SECTION -->
+  <section id="waitlist" class="border-line" style="padding:5rem 2rem;">
+    <div style="max-width:1120px;margin:0 auto;">
+      <div class="grid-2col" style="gap:3rem 5rem;align-items:start;">
+        <div>
+          <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#22d3ee;font-family:'JetBrains Mono',monospace;margin-bottom:1rem;">Early access · Limited spots</p>
+          <h2 style="font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:700;letter-spacing:-0.02em;color:#e8f0f8;margin-bottom:1.25rem;line-height:1.2;">
+            Be among the first to use MSPDash.
+          </h2>
+          <p style="font-size:0.95rem;color:#94a8b8;line-height:1.7;max-width:440px;margin-bottom:2rem;">
+            We are onboarding a small group of ConnectWise MSP owners to test MSPDash before full launch. Join the waitlist and you will be the first to know when early access opens.
+          </p>
+
+          <div style="display:flex;flex-direction:column;gap:0.875rem;font-size:0.875rem;">
+            <p style="display:flex;align-items:center;gap:0.625rem;color:rgba(232,240,248,0.75);margin:0;"><span style="width:5px;height:5px;border-radius:50%;background:#22d3ee;flex-shrink:0;"></span>Free during early access</p>
+            <p style="display:flex;align-items:center;gap:0.625rem;color:rgba(232,240,248,0.75);margin:0;"><span style="width:5px;height:5px;border-radius:50%;background:#22d3ee;flex-shrink:0;"></span>Your feedback shapes the product</p>
+            <p style="display:flex;align-items:center;gap:0.625rem;color:rgba(232,240,248,0.75);margin:0;"><span style="width:5px;height:5px;border-radius:50%;background:#22d3ee;flex-shrink:0;"></span>No credit card required</p>
+            <p style="display:flex;align-items:center;gap:0.625rem;color:rgba(232,240,248,0.75);margin:0;"><span style="width:5px;height:5px;border-radius:50%;background:#22d3ee;flex-shrink:0;"></span>First to know when we launch</p>
+          </div>
+        </div>
+
+        <div>
+          <div id="success-message" style="display:none;padding:2.5rem 0;">
+            <div style="width:3rem;height:3rem;background:rgba(34,211,238,0.1);border-radius:0.375rem;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h2 style="font-size:1.5rem;font-weight:700;color:#e8f0f8;margin-bottom:0.75rem;">You are on the list!</h2>
+            <p style="font-size:0.95rem;color:#94a8b8;line-height:1.65;margin:0;">We will email you when early access opens. Keep an eye on your inbox.</p>
+          </div>
+
+          <form id="signup-form" onsubmit="handleSubmit(event)" style="display:flex;flex-direction:column;gap:1.25rem;">
+            <div>
+              <label style="display:block;font-size:0.875rem;font-weight:500;color:#e8f0f8;margin-bottom:0.375rem;">Work email <span style="color:#22d3ee;">*</span></label>
+              <input id="email" type="email" required placeholder="you@yourmsp.com" style="width:100%;height:2.75rem;padding:0 1rem;font-size:1rem;box-sizing:border-box;" />
+            </div>
+            <div>
+              <label style="display:block;font-size:0.875rem;font-weight:500;color:#e8f0f8;margin-bottom:0.375rem;">First name</label>
+              <input id="first-name" type="text" placeholder="Alex" style="width:100%;height:2.75rem;padding:0 1rem;font-size:1rem;box-sizing:border-box;" />
+            </div>
+
+            <!-- Progressive qualifying questions -->
+            <div>
+              <label style="display:block;font-size:0.875rem;font-weight:500;color:#e8f0f8;margin-bottom:0.375rem;">How many technicians in your MSP?</label>
+              <select id="q-team-size" style="width:100%;height:2.75rem;padding:0 0.75rem;font-size:1rem;box-sizing:border-box;cursor:pointer;">
+                <option value="" disabled selected>Select team size</option>
+                <option value="1-3">1-3 technicians</option>
+                <option value="4-7">4-7 technicians</option>
+                <option value="8-10">8-10 technicians</option>
+                <option value="11+">11+ technicians</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:0.875rem;font-weight:500;color:#e8f0f8;margin-bottom:0.375rem;">Biggest reporting pain?</label>
+              <select id="q-pain" style="width:100%;height:2.75rem;padding:0 0.75rem;font-size:1rem;box-sizing:border-box;cursor:pointer;">
+                <option value="" disabled selected>Select your top challenge</option>
+                <option value="utilization">Tracking technician utilization</option>
+                <option value="sla">SLA compliance visibility</option>
+                <option value="profitability">Agreement profitability</option>
+                <option value="client-reporting">Client-facing reports</option>
+                <option value="all">All of the above</option>
+              </select>
+            </div>
+
+            <!-- GDPR consent checkbox -->
+            <div style="display:flex;align-items:flex-start;gap:0.625rem;">
+              <input type="checkbox" id="consent-checkbox" onchange="handleConsentCheckbox(this)" style="width:1.125rem;height:1.125rem;margin-top:0.125rem;accent-color:#22d3ee;cursor:pointer;flex-shrink:0;" />
+              <label for="consent-checkbox" style="font-size:0.8125rem;color:#94a8b8;line-height:1.5;cursor:pointer;">I agree to analytics cookies and the <a href="/privacy.html" style="color:#22d3ee;text-decoration:underline;">Privacy Policy</a></label>
+            </div>
+
+            <button type="submit" id="submit-btn" class="btn-primary" disabled style="width:100%;height:3rem;font-size:1rem;opacity:0.5;">
+              Get Early Access
+            </button>
+            <p style="font-size:0.75rem;color:rgba(180,210,230,0.65);text-align:center;margin:0;">No spam. We will only contact you about MSPDash.</p>
+
+            <!-- Inline "Book a call with the founder" -->
+            <div id="inline-booking" onclick="openCalendly(event)" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:1rem;padding:0.75rem 1rem;border:1px solid #0f1f2e;border-radius:0.5rem;background:rgba(11,23,35,0.3);cursor:pointer;opacity:0.4;transition:opacity 0.2s,background 0.15s;" onmouseover="this.style.background='rgba(11,23,35,0.5)'" onmouseout="this.style.background='rgba(11,23,35,0.3)'">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span style="font-size:0.875rem;font-weight:600;color:#22d3ee;">Book a call with the founder</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER + INCUBATOR BADGE -->
+  <section style="padding:2.5rem 2rem 0;">
+    <div style="max-width:1120px;margin:0 auto;text-align:center;">
+      <div style="display:inline-flex;align-items:center;gap:1rem;padding:1rem 1.5rem;border:1px solid rgba(255,255,255,0.06);border-radius:0.5rem;background:rgba(255,255,255,0.02);">
+        <img src="https://leanaistudio.com/founder.jpeg" alt="Dario Verghi" style="width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid rgba(34,211,238,0.2);" />
+        <div style="text-align:left;">
+          <p style="margin:0;font-size:0.875rem;color:#e8f0f8;font-weight:600;">A project by <a href="https://leanaistudio.com" target="_blank" rel="noopener" style="color:#22d3ee;text-decoration:none;">LeanAI Studio</a>, built by <a href="https://www.linkedin.com/in/darioverghi/" target="_blank" rel="noopener" style="color:#22d3ee;text-decoration:none;">Dario Verghi</a></p>
+          <p style="margin:0.25rem 0 0;font-size:0.8125rem;color:#94a8b8;line-height:1.5;">Building focused tools for underserved B2B niches. We ship this if 50 people sign up.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-line" style="padding:2.5rem 2rem;">
+    <div style="max-width:1120px;margin:0 auto;">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:1.25rem;margin-bottom:1.25rem;">
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.875rem;color:#e8f0f8;">MSPDash</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:1.5rem;font-size:0.75rem;color:rgba(180,210,230,0.7);">
+          <a href="mailto:info@leanaistudio.com" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='#94a8b8'" onmouseout="this.style.color='rgba(180,210,230,0.7)'">info@leanaistudio.com</a>
+          <a href="/privacy.html" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='#94a8b8'" onmouseout="this.style.color='rgba(180,210,230,0.7)'">Privacy Policy</a>
+          <a href="/terms.html" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='#94a8b8'" onmouseout="this.style.color='rgba(180,210,230,0.7)'">Terms of Service</a>
+        </div>
+      </div>
+      <div style="border-top:1px solid #0f1f2e;padding-top:1rem;font-size:0.7rem;color:rgba(180,210,230,0.5);line-height:1.8;">
+        <p style="margin:0;">© 2026 LeanAI Studio srl — P.IVA/CF: 14561020968</p>
+        <p style="margin:0;">MSPDash is a product of LeanAI Studio srl</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    function getUTMParams() {
+      var params = new URLSearchParams(window.location.search);
+      var utm = {};
+      ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k) {
+        var v = params.get(k);
+        if (v) utm[k] = v;
+      });
+      return utm;
+    }
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Joining...';
+      btn.disabled = true;
+
+      var utm = getUTMParams();
+      var email = document.getElementById('email').value;
+      var firstName = document.getElementById('first-name').value;
+      var teamSize = document.getElementById('q-team-size').value || '';
+      var pain = document.getElementById('q-pain').value || '';
+
+      var payload = {
+        secret: 'md_8k3n5p7r2w4t',
+        product: 'MSPDash',
+        email: email,
+        first_name: firstName,
+        source: 'MSPDash',
+        traffic_source: utm.utm_source || 'direct',
+        team_size: teamSize,
+        reporting_pain: pain,
+        submitted_at: new Date().toISOString(),
+        page_url: window.location.href
+      };
+      Object.assign(payload, utm);
+
+      try {
+        await fetch('/api/slack-notify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: '*[MSPDash]* New waitlist signup!\n*Email:* ' + email + '\n*Name:* ' + (firstName || 'n/a') + '\n*Product:* MSPDash\n*Team size:* ' + (teamSize || 'n/a') + '\n*Pain:* ' + (pain || 'n/a') + '\n*Traffic Source:* ' + (utm.utm_source || 'direct')
+          })
+        });
+      } catch(ex) {}
+
+      try {
+        await fetch('/api/sheet-notify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch(ex) {}
+
+      try { if (window.va) window.va('event', { name: 'waitlist-signup', data: { product: 'MSPDash', source: 'MSPDash', traffic_source: utm.utm_source || 'direct' } }); } catch(ex) {}
+
+      try {
+        await fetch('/api/resend-notify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, first_name: firstName, product: 'MSPDash' })
+        });
+      } catch(ex) {}
+
+      try { if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: 'AW-18071371531/z6DhCLq9-JccEIv-jKlD', value: 1.0, currency: 'USD' }); } catch(ex) {}
+
+      document.getElementById('signup-form').style.display = 'none';
+      document.getElementById('success-message').style.display = 'block';
+    }
+
+    var CALENDLY_URL = 'https://calendly.com/leanaistudio/30min';
+    function openCalendly(e) {
+      e.preventDefault();
+      var cb = document.getElementById('consent-checkbox');
+      if (!cb || !cb.checked) {
+        if (cb) {
+          cb.style.outline = '2px solid #f87171';
+          cb.style.outlineOffset = '2px';
+          setTimeout(function(){ cb.style.outline = 'none'; }, 1500);
+          cb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return false;
+      }
+      if (window.Calendly) {
+        Calendly.initPopupWidget({ url: CALENDLY_URL + '?utm_source=MSPDash&utm_medium=lp&utm_campaign=founder-call' });
+      }
+      return false;
+    }
+  </script>
+
+  <!-- FLOATING "BOOK A CALL" BADGE -->
+  <a id="floating-booking" href="#" onclick="return openCalendly(event)" style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;align-items:center;gap:8px;padding:12px 20px;background:#070d14;color:#e8f0f8;border:1px solid #0f1f2e;border-radius:50px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;box-shadow:0 4px 20px rgba(0,0,0,0.3);transition:all 0.2s ease;text-decoration:none;opacity:0.4;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 28px rgba(0,0,0,0.4)';this.style.background='#0b1723'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 20px rgba(0,0,0,0.3)';this.style.background='#070d14'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    Book a Call with the Founder
+  </a>
+
+  <!-- Cookie Consent Bar -->
+  <div id="consent-bar" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:10000;background:#0f172a;border-top:1px solid #1e293b;padding:0.75rem 2rem;font-family:'DM Sans',system-ui,sans-serif;">
+    <div style="max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+      <p style="margin:0;font-size:0.8125rem;color:#94a3b8;line-height:1.4;">We use cookies to measure ad performance. <a href="/privacy.html" style="color:#22d3ee;text-decoration:underline;text-underline-offset:2px;">Privacy Policy</a></p>
+      <div style="display:flex;gap:0.75rem;align-items:center;">
+        <button onclick="grantConsent()" style="background:#22d3ee;color:#070d14;border:none;border-radius:0.25rem;padding:0.4rem 1.25rem;font-size:0.8125rem;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;white-space:nowrap;">Accept</button>
+        <button onclick="document.getElementById('consent-bar').style.display='none'" style="background:transparent;color:#64748b;border:none;padding:0.4rem 0.75rem;font-size:0.75rem;cursor:pointer;white-space:nowrap;">Dismiss</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
