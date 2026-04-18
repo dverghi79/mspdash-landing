@@ -123,12 +123,12 @@
 
     <!-- CRO: Unfair Advantage killer line -->
     <div style="display:inline-flex;align-items:center;gap:0.5rem;border:1px solid rgba(34,211,238,0.2);border-radius:0.25rem;padding:0.3rem 0.75rem;color:#22d3ee;font-size:0.8rem;margin-bottom:1rem;font-family:'JetBrains Mono',monospace;font-weight:600;">
-      Connects to ConnectWise, Datto, and your RMM in one dashboard.
+      Most MSPs find out when clients complain. You'll know before.
     </div>
 
     <div style="max-width:780px;">
       <h1 style="font-size:clamp(2.25rem,5vw,3.75rem);line-height:1.08;font-weight:700;letter-spacing:-0.025em;margin-bottom:1.5rem;color:#e8f0f8;">
-        Your client just asked why their ticket from Tuesday is still open. You didn't know it existed. <span style="color:#22d3ee;">MSPDash shows you every client's health score before they have to ask.</span>
+        Your client just asked why their ticket from Tuesday is still open. You didn't know it existed, and now they're questioning your service. <span style="color:#22d3ee;">MSPDash shows you every client's health score before they have to ask.</span>
       </h1>
 
       <!-- dir-122: Scannable bullets replacing paragraph subheadline -->
@@ -148,8 +148,15 @@
       </ul>
 
       <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;">
-        <a href="#waitlist" class="btn-primary">Lock In Founding Access to Client Health Scores</a>
-        <a href="#how-it-works" class="btn-ghost">See how it works ↓</a>
+        <a href="#waitlist" class="btn-primary">Catch Client Issues Before They Complain</a>
+        <a href="#how-it-works" class="btn-ghost">See example alerts ↓</a>
+      </div>
+
+      <!-- CRO #3: Example alert preview -->
+      <div style="margin-top:2.5rem;max-width:560px;padding:1rem 1.25rem;border:1px solid rgba(34,211,238,0.15);border-radius:0.5rem;background:rgba(34,211,238,0.04);">
+        <p style="margin:0 0 0.35rem;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#22d3ee;font-family:'JetBrains Mono',monospace;">Example MSPDash Alert</p>
+        <p style="margin:0;font-size:0.9rem;color:#94a8b8;line-height:1.6;font-style:italic;">"<span style="color:#e8f0f8;font-weight:600;">Client: Acme Co</span> — SLA breach risk — 3 tickets unresolved — low health score"</p>
+        <p style="margin:0.5rem 0 0;font-size:0.7rem;color:rgba(148,168,184,0.5);font-family:'JetBrains Mono',monospace;">Flagged: Today, 7:02 AM · 43 clients monitored · 2 at risk</p>
       </div>
     </div>
 
@@ -276,9 +283,9 @@
     <p style="text-align:center;font-size:0.8rem;color:#64748b;margin-top:1rem;font-style:italic;">Early preview of the MSPDash dashboard</p>
     
       <!-- Callout overlays (desktop only, positioned over dashboard) -->
-      <div class="hide-mobile" style="position:absolute;top:160px;right:40px;background:#22d3ee;color:#070d14;font-size:0.65rem;font-weight:700;padding:0.3rem 0.6rem;border-radius:0.25rem;font-family:'Space Grotesk',sans-serif;white-space:nowrap;box-shadow:0 2px 8px rgba(34,211,238,0.3);">Tech utilization breakdown</div>
-      <div class="hide-mobile" style="position:absolute;top:240px;left:220px;background:#22d3ee;color:#070d14;font-size:0.65rem;font-weight:700;padding:0.3rem 0.6rem;border-radius:0.25rem;font-family:'Space Grotesk',sans-serif;white-space:nowrap;box-shadow:0 2px 8px rgba(34,211,238,0.3);">SLA compliance scorecard</div>
-      <div class="hide-mobile" style="position:absolute;bottom:80px;right:60px;background:#22d3ee;color:#070d14;font-size:0.65rem;font-weight:700;padding:0.3rem 0.6rem;border-radius:0.25rem;font-family:'Space Grotesk',sans-serif;white-space:nowrap;box-shadow:0 2px 8px rgba(34,211,238,0.3);">Agreement profitability alert</div>
+      <div class="hide-mobile" style="position:absolute;top:160px;right:40px;background:#22d3ee;color:#070d14;font-size:0.65rem;font-weight:700;padding:0.3rem 0.6rem;border-radius:0.25rem;font-family:'Space Grotesk',sans-serif;white-space:nowrap;box-shadow:0 2px 8px rgba(34,211,238,0.3);">Client health score updated in real time</div>
+      <div class="hide-mobile" style="position:absolute;top:240px;left:220px;background:#22d3ee;color:#070d14;font-size:0.65rem;font-weight:700;padding:0.3rem 0.6rem;border-radius:0.25rem;font-family:'Space Grotesk',sans-serif;white-space:nowrap;box-shadow:0 2px 8px rgba(34,211,238,0.3);">SLA risks flagged instantly</div>
+      <div class="hide-mobile" style="position:absolute;bottom:80px;right:60px;background:#22d3ee;color:#070d14;font-size:0.65rem;font-weight:700;padding:0.3rem 0.6rem;border-radius:0.25rem;font-family:'Space Grotesk',sans-serif;white-space:nowrap;box-shadow:0 2px 8px rgba(34,211,238,0.3);">Profitability per client</div>
     </div>
   </section>
 
@@ -287,7 +294,7 @@
     <div style="max-width:1120px;margin:0 auto;">
       <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#22d3ee;font-family:'JetBrains Mono',monospace;margin-bottom:1rem;">The problem</p>
       <h2 style="font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;letter-spacing:-0.015em;max-width:660px;margin-bottom:1.25rem;color:#e8f0f8;">
-        Your best client called to cancel. The reason was in a ticket your team closed as 'resolved' 3 weeks ago.
+        Your best client called to cancel. The reason was in a ticket your team closed as 'resolved' 3 weeks ago. And you only find out when it's too late.
       </h2>
 
       <!-- dir-122 improvement #5: Aggressive pain subparagraph -->
@@ -323,7 +330,7 @@
     <div style="max-width:1120px;margin:0 auto;">
       <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#22d3ee;font-family:'JetBrains Mono',monospace;margin-bottom:1rem;">How it works</p>
       <h2 style="font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;letter-spacing:-0.015em;max-width:600px;margin-bottom:4rem;color:#e8f0f8;">
-        Connect once. Get your Monday report. Drill into what matters.
+        Connect once. Know which clients need attention before they tell you.
       </h2>
 
       <div class="grid-auto" style="gap:1.5rem;">
@@ -337,7 +344,7 @@
             </div>
             <span class="mono" style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a8b8;">Step 1</span>
           </div>
-          <h3 style="font-size:1.05rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">See which clients are happy and which are about to churn, right now</h3>
+          <h3 style="font-size:1.05rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">Know exactly which clients are at risk right now</h3>
           <p style="font-size:0.95rem;color:#94a8b8;line-height:1.65;">Link your ConnectWise PSA with read-only API keys. MSPDash pulls tickets, time entries, agreements, and SLA data. Setup takes under 5 minutes.</p>
         </div>
         <div class="card" style="padding:2rem;">
@@ -349,7 +356,7 @@
             </div>
             <span class="mono" style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a8b8;">Step 2</span>
           </div>
-          <h3 style="font-size:1.05rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">Know about recurring issues before your client brings them up</h3>
+          <h3 style="font-size:1.05rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">Get alerted to SLA risks before your client notices</h3>
           <p style="font-size:0.95rem;color:#94a8b8;line-height:1.65;">Every Monday at 7am, MSPDash emails you a clean summary: utilization by tech, SLA compliance, top revenue clients, agreement profitability, and tickets closed. No login needed.</p>
         </div>
         <div class="card" style="padding:2rem;">
@@ -361,7 +368,7 @@
             </div>
             <span class="mono" style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a8b8;">Step 3</span>
           </div>
-          <h3 style="font-size:1.05rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">Walk into every QBR with data that proves your value, not guesses</h3>
+          <h3 style="font-size:1.05rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">Walk into every client call with answers, not guesses</h3>
           <p style="font-size:0.95rem;color:#94a8b8;line-height:1.65;">Open the dashboard to slice by technician, client, or date range. The views that matter to a small MSP are built in. No configuration required, no BI experience needed.</p>
         </div>
       </div>
@@ -379,13 +386,13 @@
       <div class="grid-2col" style="gap:1.5rem;margin-bottom:2rem;">
         <div class="card" style="padding:2rem;">
           <span class="mono" style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a8b8;display:block;margin-bottom:1rem;">The reporting gap</span>
-          <h3 style="font-size:1.15rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">See your MSP's health without leaving your inbox</h3>
+          <h3 style="font-size:1.15rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">Stop getting blindsided by client complaints</h3>
           <p style="font-size:0.95rem;color:#94a8b8;line-height:1.65;">ConnectWise reports were built for enterprises with reporting teams. MSPDash distills the metrics that matter: utilization, SLA, agreement profitability. Delivered as a weekly email built for shop owners.</p>
         </div>
         <div class="card" style="padding:2rem;">
           <span class="mono" style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:#94a8b8;display:block;margin-bottom:1rem;">The price gap</span>
-          <h3 style="font-size:1.15rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">Reporting that doesn't cost more than your RMM</h3>
-          <p style="font-size:0.95rem;color:#94a8b8;line-height:1.65;">BrightGauge and MSPbots start at $179/month and require configuration time you don't have. MSPDash is built to work out of the box at a fraction of the cost.</p>
+          <h3 style="font-size:1.15rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">Look in control of your accounts, always</h3>
+          <p style="font-size:0.95rem;color:#94a8b8;line-height:1.65;">BrightGauge and MSPbots start at $179/month and require configuration time you don't have. MSPDash is built to work out of the box at a fraction of the cost. Never guess your client health again.</p>
         </div>
       </div>
 
@@ -415,11 +422,11 @@
           <!-- dir-122: "What you'll get" value prop block -->
           <p style="font-size:0.875rem;font-weight:600;color:#e8f0f8;margin-bottom:0.75rem;">What you'll get:</p>
           <div style="display:flex;flex-direction:column;gap:0.75rem;font-size:0.875rem;margin-bottom:1.5rem;">
-            <p style="display:flex;align-items:center;gap:0.625rem;color:rgba(232,240,248,0.75);margin:0;"><span style="width:5px;height:5px;border-radius:50%;background:#22d3ee;flex-shrink:0;"></span>Automated weekly report with utilization, SLAs, and profitability</p>
-            <p style="display:flex;align-items:center;gap:0.625rem;color:rgba(232,240,248,0.75);margin:0;"><span style="width:5px;height:5px;border-radius:50%;background:#22d3ee;flex-shrink:0;"></span>Early access to the ConnectWise reporting platform</p>
-            <p style="display:flex;align-items:center;gap:0.625rem;color:rgba(232,240,248,0.75);margin:0;"><span style="width:5px;height:5px;border-radius:50%;background:#22d3ee;flex-shrink:0;"></span>Priority onboarding and direct access to the founder</p>
+            <p style="display:flex;align-items:center;gap:0.625rem;color:rgba(232,240,248,0.75);margin:0;"><span style="width:5px;height:5px;border-radius:50%;background:#22d3ee;flex-shrink:0;"></span>Real-time client health visibility</p>
+            <p style="display:flex;align-items:center;gap:0.625rem;color:rgba(232,240,248,0.75);margin:0;"><span style="width:5px;height:5px;border-radius:50%;background:#22d3ee;flex-shrink:0;"></span>Alerts on SLA risks and issues</p>
+            <p style="display:flex;align-items:center;gap:0.625rem;color:rgba(232,240,248,0.75);margin:0;"><span style="width:5px;height:5px;border-radius:50%;background:#22d3ee;flex-shrink:0;"></span>Weekly report delivered automatically</p>
           </div>
-          <p style="font-size:0.8rem;color:#22d3ee;font-weight:600;">First 50 MSPs get lifetime founding access and direct founder onboarding.</p>
+          <p style="font-size:0.8rem;color:#22d3ee;font-weight:600;">First 50 MSPs get lifetime founding access and direct founder onboarding. Once spots are filled, onboarding closes before launch.</p>
         </div>
 
         <div>
@@ -468,7 +475,7 @@
             
             </div>
             <button type="submit" id="submit-btn" class="btn-primary" style="width:100%;height:3rem;font-size:1rem;">
-              Lock In Founding Access to Client Health Scores
+              Catch Client Issues Before They Complain
             </button>
             <p style="font-size:0.75rem;color:rgba(180,210,230,0.65);text-align:center;margin:0;">By signing up you accept our <a href="/privacy.html" style="color:#22d3ee;text-decoration:underline;">Privacy Policy</a> and analytics cookies. No spam — we will only contact you about MSPDash.</p>
 
@@ -531,8 +538,18 @@
       return utm;
     }
 
+    var formStep = 1;
+    function showStep2() {
+      if (formStep === 1) {
+        formStep = 2;
+        document.getElementById('form-step-2').style.display = 'flex';
+        document.getElementById('submit-btn').textContent = 'Catch Client Issues Before They Complain';
+      }
+    }
+
     async function handleSubmit(e) {
       e.preventDefault();
+      if (formStep === 1) { showStep2(); return; }
       // Grant consent on submit — user is voluntarily engaging, enable full tracking
       grantConsent();
       var btn = document.getElementById('submit-btn');
@@ -590,7 +607,6 @@
       try { if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: 'AW-18071371531/z6DhCLq9-JccEIv-jKlD', value: 1.0, currency: 'USD' }); } catch(ex) {}
 
       document.getElementById('signup-form').style.display = 'none';
-      showStep2();
           document.getElementById('success-message').style.display = 'block';
     }
 
