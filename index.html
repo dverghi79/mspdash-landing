@@ -246,35 +246,51 @@
     .founder-booking-badge:hover{ transform:translateY(-2px); box-shadow:0 12px 40px rgba(0,0,0,0.5); border-color:rgba(34,211,238,0.2); color:#fff; }
     .founder-booking-badge svg{ width:18px; height:18px; flex-shrink:0; }
 
-    /* ── AHA MOMENT & LOGICAL CLOSER ── */
-    .aha-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
-    @media (max-width: 768px) { .aha-container { grid-template-columns: 1fr; } }
-    .aha-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s; }
-    .aha-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
-    .aha-card.pain { background: rgba(239,68,68,0.05); border-color: rgba(239,68,68,0.2); }
-    .aha-card.syncing { background: rgba(168,85,247,0.05); border-color: rgba(168,85,247,0.2); }
-    .aha-card.done { background: rgba(34,197,94,0.05); border-color: rgba(34,197,94,0.2); }
-    .aha-badge { display: inline-block; padding: 0.35rem 0.8rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
-    .aha-badge.pain { background: rgba(239,68,68,0.15); color: #ef4444; }
-    .aha-badge.syncing { background: rgba(168,85,247,0.15); color: #a855f7; }
-    .aha-badge.done { background: rgba(34,197,94,0.15); color: #22c55e; }
-    .aha-timer { font-size: 0.8rem; color: var(--text-muted); margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
-    .aha-main { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.75rem; line-height: 1.4; }
-    .aha-sub { font-size: 0.9rem; color: var(--text-secondary); margin: 0; }
-    .aha-caption { font-size: 0.8rem; color: var(--text-muted); margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-style: italic; }
-    .closer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin: 2rem 0; }
-    @media (max-width: 768px) { .closer-grid { grid-template-columns: 1fr; gap: 1.5rem; } }
-    .closer-column h3 { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
-    .closer-column h3::before { content: ''; display: inline-block; width: 3px; height: 24px; background: var(--accent); border-radius: 2px; }
-    .closer-column h3.old::before { background: #ef4444; }
-    .closer-list { display: flex; flex-direction: column; gap: 1rem; }
-    .closer-item { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
-    .closer-item.old { background: rgba(239,68,68,0.05); border-color: rgba(239,68,68,0.15); }
-    .closer-item.new { background: rgba(34,211,238,0.05); border-color: rgba(34,211,238,0.15); }
-    .closer-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; font-size: 0.75rem; }
-    .closer-icon.old { background: rgba(239,68,68,0.2); color: #ef4444; }
-    .closer-icon.new { background: rgba(34,211,238,0.2); color: var(--accent); }
-    .closer-text { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+    /* ── Aha Morphing Animation ── */
+    .aha-wrap{max-width:900px;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5);background:#111113;}
+    .aha-chrome{background:#161618;padding:0.6rem 1rem;display:flex;align-items:center;gap:0.75rem;border-bottom:1px solid var(--border);}
+    .aha-dots span{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px;}
+    .aha-status{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:0.7rem;font-weight:600;padding:0.3rem 0.75rem;border-radius:8px;transition:all 0.6s ease;}
+    .aha-status.pain{background:rgba(239,68,68,0.12);color:#ef4444;}
+    .aha-status.syncing{background:rgba(168,85,247,0.12);color:#a855f7;}
+    .aha-status.done{background:rgba(34,197,94,0.12);color:#22c55e;}
+    .aha-body{padding:1.5rem 1.5rem 1rem;position:relative;}
+    .aha-caption{text-align:center;padding:0.75rem 0 1rem;font-size:1.1rem;font-weight:700;transition:all 0.5s ease;min-height:2.5rem;}
+    .aha-form{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;transition:all 0.8s ease;}
+    .aha-field{padding:0.6rem 0.75rem;border-radius:8px;font-size:0.75rem;font-family:'JetBrains Mono',monospace;transition:all 0.8s ease;position:relative;overflow:hidden;}
+    .aha-field-label{font-size:0.55rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.3rem;transition:color 0.6s ease;}
+    .aha-field-value{font-size:0.8rem;font-weight:500;transition:color 0.6s ease;}
+    .aha-field.full{grid-column:1/-1;}
+    .aha-form.state-pain .aha-field{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);}
+    .aha-form.state-pain .aha-field-label{color:rgba(239,68,68,0.6);}
+    .aha-form.state-pain .aha-field-value{color:var(--text-muted);}
+    .aha-form.state-pain .aha-field.has-error{border-color:#ef4444;box-shadow:0 0 0 1px rgba(239,68,68,0.3);}
+    .aha-form.state-pain .aha-field.has-error .aha-field-value{color:#ef4444;text-decoration:line-through;}
+    .aha-form.state-syncing .aha-field{background:rgba(168,85,247,0.05);border:1px solid rgba(168,85,247,0.15);}
+    .aha-form.state-syncing .aha-field-label{color:rgba(168,85,247,0.6);}
+    .aha-form.state-syncing .aha-field-value{color:#a855f7;}
+    .aha-form.state-done .aha-field{background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.18);}
+    .aha-form.state-done .aha-field-label{color:rgba(34,197,94,0.6);}
+    .aha-form.state-done .aha-field-value{color:var(--text-primary);}
+    .aha-form.state-done .aha-field.has-error{border-color:rgba(34,197,94,0.18);box-shadow:none;}
+    .aha-form.state-done .aha-field.has-error .aha-field-value{color:var(--text-primary);text-decoration:none;}
+    .aha-scan{height:2px;background:transparent;margin:0.75rem 0 0;border-radius:2px;overflow:hidden;position:relative;}
+    .aha-scan-bar{position:absolute;top:0;left:0;width:0;height:100%;border-radius:2px;transition:width 1.2s ease-in-out;}
+    .aha-timer-strip{display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:0.75rem;padding:0.5rem 0;font-family:'JetBrains Mono',monospace;font-size:0.75rem;transition:all 0.5s ease;min-height:2rem;}
+    @media (max-width:600px){.aha-form{grid-template-columns:1fr;}}
+
+    /* ── Logical Closer ── */
+    .closer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:900px;margin:0 auto;}
+    .closer-card{border-radius:16px;padding:2rem 1.75rem;}
+    .closer-card-old{background:rgba(239,68,68,0.03);border:1px solid rgba(239,68,68,0.12);}
+    .closer-card-new{background:rgba(34,197,94,0.03);border:1px solid rgba(34,197,94,0.15);}
+    .closer-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;font-family:'JetBrains Mono',monospace;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.5rem;}
+    .closer-item{display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1.15rem;}
+    .closer-item:last-child{margin-bottom:0;}
+    .closer-icon{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+    .closer-icon-x{background:rgba(239,68,68,0.1);}
+    .closer-icon-check{background:rgba(34,197,94,0.1);}
+    @media (max-width:768px){.closer-grid{grid-template-columns:1fr;gap:1rem;}}
   </style>
 </head>
 <body>
@@ -493,151 +509,79 @@
   </section>
 
   <!-- ═══════════════════════════════════════════
-       AHA MOMENT (5-6 cards showing pain → syncing → done)
+       AHA MOMENT — Morphing Dashboard Animation
        ═══════════════════════════════════════════ -->
-  <section class="accent-section">
+  <section id="aha-section" style="padding:3rem 0 5rem;">
     <div class="container">
-      <p class="section-label reveal">The transformation</p>
-      <h2 class="section-title reveal" style="margin-bottom:1rem;">
-        From fragmented to <span class="gradient-text">unified in minutes.</span>
+      <p class="section-label reveal">Watch the transformation</p>
+      <h2 class="section-title reveal" style="margin-bottom:2.5rem;">
+        45 minutes of tab-switching → <span class="gradient-text">one dashboard, real-time.</span>
       </h2>
-      <p class="section-subtitle reveal" style="margin-bottom:2.5rem;">See how MSPDash pulls it all together.</p>
 
-      <div class="aha-container">
-        <!-- Card 1: ConnectWise Pain → Syncing → Done -->
-        <div class="aha-card pain reveal reveal-delay-1" data-phase="pain">
-          <div class="aha-badge pain">FRAGMENTED</div>
-          <div class="aha-main">47 open tickets — which are critical?</div>
-          <p class="aha-sub">Buried in your PSA. No visibility.</p>
-          <div class="aha-timer">⏱ 15 min/day in ConnectWise</div>
+      <div class="aha-wrap reveal-scale">
+        <!-- Browser chrome -->
+        <div class="aha-chrome">
+          <div class="aha-dots">
+            <span style="background:#ff5f57;"></span>
+            <span style="background:#ffbd2e;"></span>
+            <span style="background:#28c840;"></span>
+          </div>
+          <span style="font-size:0.6rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;">MSPDash — Monday Morning Standup</span>
+          <div id="aha-status" class="aha-status pain">Fragmented</div>
         </div>
-        <div class="aha-card syncing reveal reveal-delay-2" data-phase="syncing">
-          <div class="aha-badge syncing">SYNCING</div>
-          <div class="aha-main">47 tickets · 3 P1 · avg response 12min</div>
-          <p class="aha-sub">Real-time sync from ConnectWise.</p>
-          <div class="aha-timer">⟳ Syncing ConnectWise · Datto · IT Glue · SentinelOne…</div>
-        </div>
-        <div class="aha-card done reveal reveal-delay-3" data-phase="done">
-          <div class="aha-badge done">UNIFIED</div>
-          <div class="aha-main">47 tickets · 3 critical · triage ready</div>
-          <p class="aha-sub">One dashboard. One view of truth.</p>
-          <div class="aha-timer">✓ 4 platforms unified · real-time · zero tab-switching</div>
-        </div>
-      </div>
 
-      <div class="aha-container" style="margin-top:3rem;">
-        <!-- Card 2: Datto Pain → Syncing → Done -->
-        <div class="aha-card pain reveal reveal-delay-1" data-phase="pain">
-          <div class="aha-badge pain">FRAGMENTED</div>
-          <div class="aha-main">Backup failed — found out 3 days later</div>
-          <p class="aha-sub">After the client calls you.</p>
-          <div class="aha-timer">⏱ 20 min/day checking backups manually</div>
-        </div>
-        <div class="aha-card syncing reveal reveal-delay-2" data-phase="syncing">
-          <div class="aha-badge syncing">SYNCING</div>
-          <div class="aha-main">All 89 backups verified · last check 4min ago</div>
-          <p class="aha-sub">Continuous verification from Datto.</p>
-          <div class="aha-timer">⟳ Syncing ConnectWise · Datto · IT Glue · SentinelOne…</div>
-        </div>
-        <div class="aha-card done reveal reveal-delay-3" data-phase="done">
-          <div class="aha-badge done">UNIFIED</div>
-          <div class="aha-main">89 backups all green · 4min freshness</div>
-          <p class="aha-sub">Proactive, not reactive.</p>
-          <div class="aha-timer">✓ Every backup monitored · instant alerts · zero surprises</div>
-        </div>
-      </div>
+        <div class="aha-body">
+          <!-- Caption overlay -->
+          <div id="aha-caption" class="aha-caption" style="color:#ef4444;">
+            Switching between ConnectWise, Datto, IT Glue, SentinelOne...
+          </div>
 
-      <div class="aha-container" style="margin-top:3rem;">
-        <!-- Card 3: IT Glue Pain → Syncing → Done -->
-        <div class="aha-card pain reveal reveal-delay-1" data-phase="pain">
-          <div class="aha-badge pain">FRAGMENTED</div>
-          <div class="aha-main">Documentation outdated since Q2</div>
-          <p class="aha-sub">No one knows what's current.</p>
-          <div class="aha-timer">⏱ Manual sync overhead</div>
-        </div>
-        <div class="aha-card syncing reveal reveal-delay-2" data-phase="syncing">
-          <div class="aha-badge syncing">SYNCING</div>
-          <div class="aha-main">312 configs synced · 14 updated today</div>
-          <p class="aha-sub">Real-time from IT Glue.</p>
-          <div class="aha-timer">⟳ Syncing ConnectWise · Datto · IT Glue · SentinelOne…</div>
-        </div>
-        <div class="aha-card done reveal reveal-delay-3" data-phase="done">
-          <div class="aha-badge done">UNIFIED</div>
-          <div class="aha-main">312 configs · always current · single source</div>
-          <p class="aha-sub">Docs stay in sync automatically.</p>
-          <div class="aha-timer">✓ One pane of glass · 312 configs · live updates</div>
-        </div>
-      </div>
+          <!-- The morphing form -->
+          <div id="aha-form" class="aha-form state-pain">
+            <div class="aha-field has-error">
+              <div class="aha-field-label">Open Tickets</div>
+              <div class="aha-field-value" data-pain="47 — which are critical??" data-done="47 open · 3 P1 · triage ready">47 — which are critical??</div>
+            </div>
+            <div class="aha-field has-error">
+              <div class="aha-field-label">SLA Compliance</div>
+              <div class="aha-field-value" data-pain="(checking ConnectWise...)" data-done="94.2% · Apex Corp dropping">(checking ConnectWise...)</div>
+            </div>
+            <div class="aha-field">
+              <div class="aha-field-label">Tech Utilization</div>
+              <div class="aha-field-value" data-pain="(need to run exports...)" data-done="78.4% avg · 3 below target">(need to run exports...)</div>
+            </div>
+            <div class="aha-field">
+              <div class="aha-field-label">Backup Status</div>
+              <div class="aha-field-value" data-pain="(open Datto tab...)" data-done="89 verified · last check 4min ago">(open Datto tab...)</div>
+            </div>
+            <div class="aha-field">
+              <div class="aha-field-label">Revenue / Client</div>
+              <div class="aha-field-value" data-pain="(QuickBooks pivot table?)" data-done="$48K MRR · 102% of target">(QuickBooks pivot table?)</div>
+            </div>
+            <div class="aha-field">
+              <div class="aha-field-label">Security Alerts</div>
+              <div class="aha-field-value" data-pain="200+ unread (noise)" data-done="3 real threats · noise filtered">200+ unread (noise)</div>
+            </div>
+            <div class="aha-field full has-error">
+              <div class="aha-field-label">Client Health</div>
+              <div class="aha-field-value" data-pain="Which clients are about to churn? (no idea)" data-done="142 clients · 98.2% SLA · 3 at-risk flagged">Which clients are about to churn? (no idea)</div>
+            </div>
+            <div class="aha-field full">
+              <div class="aha-field-label">Avg Resolution Time</div>
+              <div class="aha-field-value" data-pain="4.2h — is that good? (check benchmark...)" data-done="4.2h avg · target 4.0h · 8 near breach">4.2h — is that good? (check benchmark...)</div>
+            </div>
+          </div>
 
-      <div class="aha-container" style="margin-top:3rem;">
-        <!-- Card 4: SentinelOne Pain → Syncing → Done -->
-        <div class="aha-card pain reveal reveal-delay-1" data-phase="pain">
-          <div class="aha-badge pain">FRAGMENTED</div>
-          <div class="aha-main">Alert fatigue — 200+ alerts/day</div>
-          <p class="aha-sub">Noise drowns out real threats.</p>
-          <div class="aha-timer">⏱ Hours spent filtering noise</div>
-        </div>
-        <div class="aha-card syncing reveal reveal-delay-2" data-phase="syncing">
-          <div class="aha-badge syncing">SYNCING</div>
-          <div class="aha-main">3 real threats · 197 auto-resolved · 0 critical</div>
-          <p class="aha-sub">AI-filtered from SentinelOne.</p>
-          <div class="aha-timer">⟳ Syncing ConnectWise · Datto · IT Glue · SentinelOne…</div>
-        </div>
-        <div class="aha-card done reveal reveal-delay-3" data-phase="done">
-          <div class="aha-badge done">UNIFIED</div>
-          <div class="aha-main">3 critical alerts · noise eliminated</div>
-          <p class="aha-sub">Signal, not noise.</p>
-          <div class="aha-timer">✓ Signal only · real threats surfaced · false positives buried</div>
-        </div>
-      </div>
+          <!-- Scanning bar -->
+          <div class="aha-scan">
+            <div id="aha-scan-bar" class="aha-scan-bar"></div>
+          </div>
 
-      <div class="aha-container" style="margin-top:3rem;">
-        <!-- Card 5: NOC View (full-width) Pain → Syncing → Done -->
-        <div class="aha-card pain reveal reveal-delay-1" style="grid-column:1/2;" data-phase="pain">
-          <div class="aha-badge pain">FRAGMENTED</div>
-          <div class="aha-main">5 tabs, 5 logins, 5 different dashboards</div>
-          <p class="aha-sub">Tab-switching chaos every morning.</p>
-          <div class="aha-timer">⏱ 45 min/day switching between tools</div>
-          <div class="aha-caption">Monday 8 AM. Five dashboards. Five logins. No single view.</div>
-        </div>
-        <div class="aha-card syncing reveal reveal-delay-2" style="grid-column:2/3;" data-phase="syncing">
-          <div class="aha-badge syncing">SYNCING</div>
-          <div class="aha-main">ConnectWise · Datto · IT Glue · SentinelOne pulling</div>
-          <p class="aha-sub">All data flowing in real time.</p>
-          <div class="aha-timer">⟳ Syncing ConnectWise · Datto · IT Glue · SentinelOne…</div>
-          <div class="aha-caption">MSPDash pulling data from ConnectWise, Datto, IT Glue, SentinelOne…</div>
-        </div>
-        <div class="aha-card done reveal reveal-delay-3" style="grid-column:3/4;" data-phase="done">
-          <div class="aha-badge done">UNIFIED</div>
-          <div class="aha-main">Single pane · 4 tools · real-time sync · zero tab-switching</div>
-          <p class="aha-sub">Everything you need, one login.</p>
-          <div class="aha-timer">✓ 4 platforms unified · 142 clients · real-time</div>
-          <div class="aha-caption">Single pane of glass. 142 clients. Zero tab-switching.</div>
-        </div>
-      </div>
-
-      <div class="aha-container" style="margin-top:3rem;">
-        <!-- Card 6: Client Health (full-width) Pain → Syncing → Done -->
-        <div class="aha-card pain reveal reveal-delay-1" style="grid-column:1/2;" data-phase="pain">
-          <div class="aha-badge pain">FRAGMENTED</div>
-          <div class="aha-main">Which clients are about to churn?</div>
-          <p class="aha-sub">You find out when they call a competitor.</p>
-          <div class="aha-timer">⏱ Guessing game every week</div>
-          <div class="aha-caption">Monday 8 AM. Five dashboards. Five logins. No single view.</div>
-        </div>
-        <div class="aha-card syncing reveal reveal-delay-2" style="grid-column:2/3;" data-phase="syncing">
-          <div class="aha-badge syncing">SYNCING</div>
-          <div class="aha-main">Client health scores · churn risk flagged</div>
-          <p class="aha-sub">Tracking SLA trends across all clients.</p>
-          <div class="aha-timer">⟳ Syncing ConnectWise · Datto · IT Glue · SentinelOne…</div>
-          <div class="aha-caption">MSPDash pulling data from ConnectWise, Datto, IT Glue, SentinelOne…</div>
-        </div>
-        <div class="aha-card done reveal reveal-delay-3" style="grid-column:3/4;" data-phase="done">
-          <div class="aha-badge done">UNIFIED</div>
-          <div class="aha-main">142 clients · 98.2% SLA · 3 at-risk flagged</div>
-          <p class="aha-sub">Act before they call.</p>
-          <div class="aha-timer">✓ 4 platforms unified · 142 clients · real-time</div>
-          <div class="aha-caption">Single pane of glass. 142 clients. Zero tab-switching.</div>
+          <!-- Timer strip -->
+          <div id="aha-timer" class="aha-timer-strip" style="color:#ef4444;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="aha-timer-text">~45 minutes switching between 5 tools</span>
+          </div>
         </div>
       </div>
     </div>
@@ -725,59 +669,108 @@
   </section>
 
   <!-- ═══════════════════════════════════════════
-       LOGICAL CLOSER (Old Way vs MSPDash)
+       LOGICAL CLOSER — Old Way vs MSPDash
        ═══════════════════════════════════════════ -->
-  <section>
+  <section style="padding:4rem 0 5rem;">
     <div class="container">
-      <p class="section-label reveal">Why MSPDash wins</p>
-      <h2 class="section-title reveal" style="margin-bottom:1rem;">
-        Stop managing your MSP <span class="gradient-text">like it's still 2015.</span>
+      <p class="section-label reveal">Why switch</p>
+      <h2 class="section-title reveal" style="margin-bottom:2.5rem;">
+        The old way vs. <span class="gradient-text">the MSPDash way.</span>
       </h2>
-      <p class="section-subtitle reveal" style="margin-bottom:2.5rem;">Old workflow vs. MSPDash. Real numbers. Real time.</p>
 
       <div class="closer-grid">
-        <!-- Old Way Column -->
-        <div class="reveal reveal-delay-1">
-          <h3 class="old">The Old Way</h3>
-          <div class="closer-list">
-            <div class="closer-item old">
-              <div class="closer-icon old">✕</div>
-              <div class="closer-text">Log into 5 different platforms every morning to check status</div>
+        <!-- OLD WAY -->
+        <div class="closer-card closer-card-old reveal reveal-delay-1">
+          <div class="closer-label" style="color:#ef4444;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            The Old Way
+          </div>
+
+          <div class="closer-item">
+            <div class="closer-icon closer-icon-x">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </div>
-            <div class="closer-item old">
-              <div class="closer-icon old">✕</div>
-              <div class="closer-text">Backup failures discovered days later — after the client calls</div>
+            <div>
+              <p style="margin:0;font-size:0.9rem;font-weight:600;color:var(--text-primary);">5 logins every morning</p>
+              <p style="margin:0.25rem 0 0;font-size:0.8rem;color:var(--text-muted);">ConnectWise, Datto, IT Glue, SentinelOne, QuickBooks — 45 min before you even start working</p>
             </div>
-            <div class="closer-item old">
-              <div class="closer-icon old">✕</div>
-              <div class="closer-text">Alert fatigue: 200+ notifications per day, mostly noise</div>
+          </div>
+
+          <div class="closer-item">
+            <div class="closer-icon closer-icon-x">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </div>
-            <div class="closer-item old">
-              <div class="closer-icon old">✕</div>
-              <div class="closer-text">No single view of client health across your entire stack</div>
+            <div>
+              <p style="margin:0;font-size:0.9rem;font-weight:600;color:var(--text-primary);">Backup failures found days late</p>
+              <p style="margin:0.25rem 0 0;font-size:0.8rem;color:var(--text-muted);">You find out when the client calls you, not when the backup fails</p>
+            </div>
+          </div>
+
+          <div class="closer-item">
+            <div class="closer-icon closer-icon-x">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </div>
+            <div>
+              <p style="margin:0;font-size:0.9rem;font-weight:600;color:var(--text-primary);">200+ alerts per day, mostly noise</p>
+              <p style="margin:0.25rem 0 0;font-size:0.8rem;color:var(--text-muted);">Real threats buried under false positives. Alert fatigue is the norm.</p>
+            </div>
+          </div>
+
+          <div class="closer-item">
+            <div class="closer-icon closer-icon-x">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </div>
+            <div>
+              <p style="margin:0;font-size:0.9rem;font-weight:600;color:var(--text-primary);">No client health visibility</p>
+              <p style="margin:0.25rem 0 0;font-size:0.8rem;color:var(--text-muted);">You find out a client is churning when they call a competitor — not before.</p>
             </div>
           </div>
         </div>
 
-        <!-- MSPDash Column -->
-        <div class="reveal reveal-delay-2">
-          <h3>MSPDash Solution</h3>
-          <div class="closer-list">
-            <div class="closer-item new">
-              <div class="closer-icon new">✓</div>
-              <div class="closer-text">One dashboard pulls ConnectWise, Datto, IT Glue, and SentinelOne together</div>
+        <!-- MSPDASH WAY -->
+        <div class="closer-card closer-card-new reveal reveal-delay-2">
+          <div class="closer-label" style="color:#22c55e;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            With MSPDash
+          </div>
+
+          <div class="closer-item">
+            <div class="closer-icon closer-icon-check">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div class="closer-item new">
-              <div class="closer-icon new">✓</div>
-              <div class="closer-text">Backup verification every 5 minutes — failures flagged instantly</div>
+            <div>
+              <p style="margin:0;font-size:0.9rem;font-weight:600;color:var(--text-primary);">One dashboard, all tools unified</p>
+              <p style="margin:0.25rem 0 0;font-size:0.8rem;color:var(--text-muted);">ConnectWise, Datto, IT Glue, SentinelOne — one login, one view, real-time.</p>
             </div>
-            <div class="closer-item new">
-              <div class="closer-icon new">✓</div>
-              <div class="closer-text">AI-filtered alerts: only real threats surface, noise auto-resolved</div>
+          </div>
+
+          <div class="closer-item">
+            <div class="closer-icon closer-icon-check">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div class="closer-item new">
-              <div class="closer-icon new">✓</div>
-              <div class="closer-text">Client health scores with churn risk flagging — act before they call</div>
+            <div>
+              <p style="margin:0;font-size:0.9rem;font-weight:600;color:var(--text-primary);">Backup checks every 5 minutes</p>
+              <p style="margin:0.25rem 0 0;font-size:0.8rem;color:var(--text-muted);">Failures flagged instantly. You know before your client does.</p>
+            </div>
+          </div>
+
+          <div class="closer-item">
+            <div class="closer-icon closer-icon-check">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <p style="margin:0;font-size:0.9rem;font-weight:600;color:var(--text-primary);">AI-filtered alerts — signal only</p>
+              <p style="margin:0.25rem 0 0;font-size:0.8rem;color:var(--text-muted);">Real threats surface. Noise auto-resolved. 3 alerts, not 200.</p>
+            </div>
+          </div>
+
+          <div class="closer-item">
+            <div class="closer-icon closer-icon-check">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <p style="margin:0;font-size:0.9rem;font-weight:600;color:var(--text-primary);">Client health scores + churn flags</p>
+              <p style="margin:0.25rem 0 0;font-size:0.8rem;color:var(--text-muted);">At-risk clients flagged automatically. Act before they shop competitors.</p>
             </div>
           </div>
         </div>
@@ -1210,62 +1203,92 @@
       return false;
     }
 
-    /* ── AHA MOMENT ANIMATION ── */
+    /* ── DKI (Dynamic Keyword Insertion) ── */
     (function() {
-      var ahaCards = document.querySelectorAll('.aha-card');
-      if (ahaCards.length === 0) return;
+      var params = new URLSearchParams(window.location.search);
+      var headline = params.get('headline');
+      if (headline) {
+        var h1 = document.querySelector('h1');
+        if (h1) {
+          h1.setAttribute('data-default-headline', h1.innerHTML);
+          h1.textContent = decodeURIComponent(headline);
+        }
+      }
+    })();
 
-      var ahaObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            var card = entry.target;
-            var phase = card.dataset.phase;
-            var mainEl = card.querySelector('.aha-main');
-            var subEl = card.querySelector('.aha-sub');
-            var timerEl = card.querySelector('.aha-timer');
-            var captionEl = card.querySelector('.aha-caption');
+    /* ── AHA MORPHING ANIMATION ── */
+    (function() {
+      var form = document.getElementById('aha-form');
+      var status = document.getElementById('aha-status');
+      var caption = document.getElementById('aha-caption');
+      var scanBar = document.getElementById('aha-scan-bar');
+      var timer = document.getElementById('aha-timer');
+      var timerText = document.getElementById('aha-timer-text');
+      if (!form || !status) return;
+      var fields = form.querySelectorAll('.aha-field-value');
+      var section = document.getElementById('aha-section');
+      var started = false;
 
-            if (!mainEl || card.classList.contains('aha-animated')) return;
-            card.classList.add('aha-animated');
+      function runCycle() {
+        // Phase 1: PAIN state
+        form.className = 'aha-form state-pain';
+        status.className = 'aha-status pain';
+        status.textContent = 'Fragmented';
+        caption.style.color = '#ef4444';
+        caption.textContent = 'Switching between ConnectWise, Datto, IT Glue, SentinelOne...';
+        scanBar.style.width = '0';
+        scanBar.style.background = 'transparent';
+        timer.style.color = '#ef4444';
+        timerText.textContent = '~45 minutes switching between 5 tools';
+        fields.forEach(function(f) { f.textContent = f.dataset.pain; });
 
-            var mainText = mainEl.textContent;
-            var subText = subEl ? subEl.textContent : '';
-            var timerText = timerEl ? timerEl.textContent : '';
-            var captionText = captionEl ? captionEl.textContent : '';
+        // Phase 2: SYNCING (after 3s)
+        setTimeout(function() {
+          form.className = 'aha-form state-syncing';
+          status.className = 'aha-status syncing';
+          status.textContent = 'Syncing...';
+          caption.style.color = '#a855f7';
+          caption.textContent = 'MSPDash pulling data from ConnectWise, Datto, IT Glue...';
+          scanBar.style.background = 'linear-gradient(90deg, #a855f7, #8b5cf6)';
+          scanBar.style.width = '100%';
+          timer.style.color = '#a855f7';
+          timerText.textContent = 'Syncing 4 platforms...';
+        }, 3000);
 
-            mainEl.textContent = '';
-            subEl.textContent = '';
-            timerEl.textContent = '';
-            captionEl.textContent = '';
+        // Phase 3: Fields fill one by one (after 4.5s)
+        setTimeout(function() {
+          fields.forEach(function(f, i) {
+            setTimeout(function() {
+              f.textContent = f.dataset.done;
+            }, i * 150);
+          });
+        }, 4500);
 
-            var duration = phase === 'pain' ? 3000 : phase === 'syncing' ? 4500 : 6000;
-            var startTime = null;
+        // Phase 4: DONE (after 6s)
+        setTimeout(function() {
+          form.className = 'aha-form state-done';
+          status.className = 'aha-status done';
+          status.textContent = 'Unified';
+          caption.style.color = '#22c55e';
+          caption.textContent = 'Single pane of glass. 142 clients. Zero tab-switching.';
+          scanBar.style.background = 'linear-gradient(90deg, #22c55e, #16a34a)';
+          timer.style.color = '#22c55e';
+          timerText.textContent = 'Real-time — 4 platforms unified';
+        }, 6000);
 
-            function animate(timestamp) {
-              if (!startTime) startTime = timestamp;
-              var elapsed = timestamp - startTime;
-              var progress = Math.min(elapsed / duration, 1);
+        // Loop: restart after 10s total
+        setTimeout(function() { runCycle(); }, 10000);
+      }
 
-              mainEl.textContent = mainText.substring(0, Math.floor(mainText.length * progress));
-              if (progress > 0.3) subEl.textContent = subText.substring(0, Math.floor(subText.length * (progress - 0.3) / 0.7));
-              if (progress > 0.6) timerEl.textContent = timerText.substring(0, Math.floor(timerText.length * (progress - 0.6) / 0.4));
-              if (progress > 0.8 && captionText) captionEl.textContent = captionText.substring(0, Math.floor(captionText.length * (progress - 0.8) / 0.2));
-
-              if (progress < 1) requestAnimationFrame(animate);
-              else {
-                mainEl.textContent = mainText;
-                subEl.textContent = subText;
-                timerEl.textContent = timerText;
-                if (captionText) captionEl.textContent = captionText;
-              }
-            }
-            requestAnimationFrame(animate);
-            ahaObserver.unobserve(card);
-          }
-        });
-      }, { threshold: 0.2 });
-
-      ahaCards.forEach(function(card) { ahaObserver.observe(card); });
+      // Start on scroll into view
+      var ahaObs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting && !started) {
+          started = true;
+          runCycle();
+          ahaObs.unobserve(section);
+        }
+      }, { threshold: 0.3 });
+      ahaObs.observe(section);
     })();
   </script>
 
