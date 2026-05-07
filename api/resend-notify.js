@@ -1,3 +1,9 @@
+// resend-notify.js — MSPDash LP
+// Required env vars: RESEND_API_KEY, RESEND_FROM_EMAIL, CONTACT_EMAIL
+// RESEND_SEGMENT_ID defaults to the MSPDash waitlist segment if not overridden.
+
+const PRODUCT_SEGMENT_ID = 'cc4d721e-cab8-47c7-a62b-ea68f449dee5'; // Waitlist-MSPDash
+
 // resend-notify.js — CJS version for MSPDash
 // Required env vars: RESEND_API_KEY, RESEND_FROM_EMAIL, CONTACT_EMAIL, RESEND_AUDIENCE_ID
 
@@ -14,7 +20,7 @@ module.exports = async function handler(req, res) {
 
   const fromEmail = process.env.RESEND_FROM_EMAIL || 'Dario - LeanAI Studio <dario@leanaistudio.com>';
   const contactEmail = process.env.CONTACT_EMAIL || 'contact@leanaistudio.com';
-  const audienceId = process.env.RESEND_AUDIENCE_ID || null;
+  const segmentId = process.env.RESEND_SEGMENT_ID || PRODUCT_SEGMENT_ID;
 
   const { email, first_name, product } = req.body || {};
   if (!email) {
@@ -29,20 +35,18 @@ module.exports = async function handler(req, res) {
 
   const results = {};
 
-  // Step 1: Create contact in Resend (with source tracking)
+  // Step 1: Create contact in Resend and assign to waitlist segment atomically
   try {
     const contactPayload = {
       email: email,
       first_name: firstName || undefined,
       unsubscribed: false,
-    };
-    if (audienceId) {
-      contactPayload.audience_id = audienceId;
-    }
-    contactPayload.properties = {
-      source: productName,
-      product: productName,
-      signed_up_at: new Date().toISOString(),
+      properties: {
+        source: productName,
+        product: productName,
+        signed_up_at: new Date().toISOString(),
+      },
+      segments: [segmentId],
     };
 
     const contactRes = await fetch('https://api.resend.com/contacts', {
